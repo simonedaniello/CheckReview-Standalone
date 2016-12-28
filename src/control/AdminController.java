@@ -37,12 +37,14 @@ public class AdminController {
     }
 
     public void checkReview(int index, JFrame frame){
+
         frame.repaint();
         Review review = array.get(index);
         new ReviewBoundary(frame, review.getReview(), review.getOwner(), review.getRating(), review.getArticle(), review.getUser());
     }
 
     public void finishedReview(JFrame frame){
+
         frame.repaint();
         new ListBoundary(frame);
     }

@@ -1,9 +1,12 @@
 package boundary;
 
+import control.AdminController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 /**
  * @author dandi on 28/12/16.
@@ -11,9 +14,10 @@ import java.awt.event.ActionListener;
 public class ListBoundary {
 
     private JList<String> list1;
-
+    private JFrame frame;
 
     public ListBoundary(JFrame frame) {
+        this.frame = frame;
         DefaultListModel<String> model = new DefaultListModel<>();
         list1 = new JList<>();
         list1.setModel(model);
@@ -35,12 +39,8 @@ public class ListBoundary {
 
         pannello.add(bottoni);
 
-        frame.add(pannello);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setContentPane(pannello);
         frame.pack();
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(dim.width/2- frame.getSize().width/2, dim.height/2- frame.getSize().height/2);
         frame.setVisible(true);
     }
 
@@ -55,10 +55,15 @@ public class ListBoundary {
 
         public void actionPerformed(ActionEvent event) {
             if(this.kind == 1){
-                System.out.println("azione 1");
+                try {
+                    list1.setModel(AdminController.getInstance().update());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             else if(this.kind == 0){
-                System.out.println("azione 0");
+                frame.setVisible(false);
+                AdminController.getInstance().checkReview(list1.getSelectedIndex(), frame);
             }
         }
     }

@@ -97,11 +97,8 @@ public class ReviewBoundary {
         gbc.insets = new Insets(10, 10, 10, 10);
         mainJpanel.add(backB, gbc);
 
-        frame.add(mainJpanel);
+        frame.setContentPane(mainJpanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(dim.width/2- frame.getSize().width/2, dim.height/2- frame.getSize().height/2);
-        frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
     }
