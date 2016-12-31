@@ -1,16 +1,28 @@
 package boundary;
 
+import control.AdminController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 /**
  * @author dandi on 28/12/16.
  */
+
 public class ReviewBoundary {
 
+    private String user;
+    private String article;
+    private JFrame frame;
+
     public ReviewBoundary(JFrame frame, String review, String owner, int rating, String article, String user) {
+
+        this.user = user;
+        this.article = article;
+        this.frame = frame;
 
         GridBagConstraints gbc = new GridBagConstraints();
         JPanel mainJpanel = new JPanel(new GridBagLayout());
@@ -113,13 +125,35 @@ public class ReviewBoundary {
 
         public void actionPerformed(ActionEvent event) {
             if(this.kind == 1){
-                System.out.println("azione 1");
+                try {
+                    if(!AdminController.getInstance().refuseReview(article, user)){
+                        JOptionPane.showMessageDialog(null, "C'è stato un errore", "Warning", JOptionPane.ERROR_MESSAGE);
+                        AdminController.getInstance().finishedReview(frame);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Recensione rimossa con succcesso", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        AdminController.getInstance().finishedReview(frame);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             else if(this.kind == 0){
-                System.out.println("azione 0");
+                try {
+                    if(!AdminController.getInstance().acceptReview(article, user)){
+                        JOptionPane.showMessageDialog(null, "C'è stato un errore", "Warning", JOptionPane.ERROR_MESSAGE);
+                        AdminController.getInstance().finishedReview(frame);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Recensione accettata con succcesso", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        AdminController.getInstance().finishedReview(frame);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             else if(this.kind == 2){
-                System.out.println("azione 2");
+                AdminController.getInstance().finishedReview(frame);
             }
         }
     }

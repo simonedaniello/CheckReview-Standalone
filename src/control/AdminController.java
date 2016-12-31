@@ -49,18 +49,18 @@ public class AdminController {
         new ListBoundary(frame);
     }
 
-    public void acceptReview(String articleName, String user) throws SQLException {
+    public boolean acceptReview(String articleName, String user) throws SQLException {
         String sql = "UPDATE ARTICLES.recensione SET TOCHECK = FALSE WHERE UPPER(UTENTE) " +
                 "LIKE UPPER('"+ user +"') AND UPPER(ARTICOLO) LIKE UPPER('"+ articleName +"')";
 
-        DatabaseController.getInstance().executeQuery(sql);
+        return DatabaseController.getInstance().executeQuery(sql);
     }
 
-    public void refuseReview(String articleName, String user) throws SQLException {
+    public boolean refuseReview(String articleName, String user) throws SQLException {
         String sql = "DELETE FROM ARTICLES.recensione WHERE UPPER(UTENTE) " +
                 "LIKE UPPER('"+ user +"') AND UPPER(ARTICOLO) LIKE UPPER('"+ articleName +"')";
 
-        DatabaseController.getInstance().executeQuery(sql);
+        return DatabaseController.getInstance().executeQuery(sql);
     }
 
 }

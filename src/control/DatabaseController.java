@@ -52,8 +52,20 @@ class DatabaseController {
         }
     }
 
-    void executeQuery(String sql) throws SQLException {
-        Statement stmt = provider.getConnection().createStatement();
-        stmt.executeUpdate(sql);
+    boolean executeQuery(String sql) {
+        Statement stmt;
+        try {
+            stmt = provider.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try {
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }
