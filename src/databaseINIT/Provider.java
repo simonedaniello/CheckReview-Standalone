@@ -25,7 +25,7 @@ public class Provider {
     {
         Connection conn = null;
         try {
-            
+
             Class.forName(this.JDBC_DRIVER);
             conn = DriverManager.getConnection(this.DB_URL, this.USER, this.PASS);
 
