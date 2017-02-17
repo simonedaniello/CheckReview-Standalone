@@ -17,6 +17,6 @@ class Factory {
     }
 
     Review getReview(){
-        return( new Review());
+        return(new Review());
     }
 }

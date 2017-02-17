@@ -30,6 +30,7 @@ public class AdminController {
         DefaultListModel<String> model = new DefaultListModel<>();
         array = DatabaseController.getInstance().getPendingReviews();
 
+        System.out.println("sono qui");
         for (Review anArray : array)
             model.addElement(anArray.getArticle());
 
@@ -40,7 +41,7 @@ public class AdminController {
 
         frame.repaint();
         Review review = array.get(index);
-        new ReviewBoundary(frame, review.getReview(), review.getOwner(), review.getRating(), review.getArticle(), review.getUser());
+        new ReviewBoundary(frame, review.getReview().replaceAll("'", "''"), review.getOwner().replaceAll("'", "''"), review.getRating(), review.getArticle().replaceAll("'", "''"), review.getUser().replaceAll("'", "''"));
     }
 
     public void finishedReview(JFrame frame){
@@ -53,6 +54,10 @@ public class AdminController {
         String sql = "UPDATE ARTICLES.recensione SET TOCHECK = FALSE WHERE UPPER(UTENTE) " +
                 "LIKE UPPER('"+ user +"') AND UPPER(ARTICOLO) LIKE UPPER('"+ articleName +"')";
 
+        for (Review anArray : array) {
+            if (anArray.getUser().equals(user) && anArray.getArticle().equals(articleName) && anArray.isWarning())
+                return false;
+        }
         return DatabaseController.getInstance().executeQuery(sql);
     }
 
@@ -60,6 +65,7 @@ public class AdminController {
         String sql = "DELETE FROM ARTICLES.recensione WHERE UPPER(UTENTE) " +
                 "LIKE UPPER('"+ user +"') AND UPPER(ARTICOLO) LIKE UPPER('"+ articleName +"')";
 
+        System.out.println("sono qui2");
         return DatabaseController.getInstance().executeQuery(sql);
     }
 

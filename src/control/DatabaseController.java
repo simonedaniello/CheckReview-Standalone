@@ -45,6 +45,7 @@ class DatabaseController {
                 nuovoArticolo.setRating(rs.getInt("RAITNG"));
                 nuovoArticolo.setUser(rs.getString("UTENTE"));
                 nuovoArticolo.setReview(rs.getString("TESTO"));
+                nuovoArticolo.setWarning(rs.getBoolean("SEGNALAZIONE"));
 
                 array.add(nuovoArticolo);
             }

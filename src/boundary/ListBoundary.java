@@ -40,6 +40,7 @@ public class ListBoundary {
         pannello.add(bottoni);
 
         frame.setContentPane(pannello);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }

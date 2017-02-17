@@ -14,9 +14,9 @@ public class Provider {
     public Provider()
     {
         this.JDBC_DRIVER = "org.postgresql.Driver";
-        this.DB_URL = "jdbc:postgresql://localhost:5432/ispw";
-        this.USER = "superuser";
-        this.PASS = "password";
+        this.DB_URL = "xxx";
+        this.USER = "xxx";
+        this.PASS = "xxx";
     }
 
 
@@ -25,11 +25,7 @@ public class Provider {
     {
         Connection conn = null;
         try {
-
-//			System.out.println(this.DB_URL);
-//			System.out.println(this.USER);
-//			System.out.println(this.PASS);
-
+            
             Class.forName(this.JDBC_DRIVER);
             conn = DriverManager.getConnection(this.DB_URL, this.USER, this.PASS);
 

@@ -17,6 +17,7 @@ public class ReviewBoundary {
     private String user;
     private String article;
     private JFrame frame;
+    private JFrame confirmFrame;
 
     public ReviewBoundary(JFrame frame, String review, String owner, int rating, String article, String user) {
 
@@ -131,7 +132,7 @@ public class ReviewBoundary {
                         AdminController.getInstance().finishedReview(frame);
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "Recensione rimossa con succcesso", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Recensione rimossa con successo", "Successo", JOptionPane.INFORMATION_MESSAGE);
                         AdminController.getInstance().finishedReview(frame);
                     }
                 } catch (SQLException e) {
@@ -141,11 +142,10 @@ public class ReviewBoundary {
             else if(this.kind == 0){
                 try {
                     if(!AdminController.getInstance().acceptReview(article, user)){
-                        JOptionPane.showMessageDialog(null, "C'è stato un errore", "Warning", JOptionPane.ERROR_MESSAGE);
-                        AdminController.getInstance().finishedReview(frame);
+                        initSuccessFrame();
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "Recensione accettata con succcesso", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Recensione accettata con successo", "Successo", JOptionPane.INFORMATION_MESSAGE);
                         AdminController.getInstance().finishedReview(frame);
                     }
                 } catch (SQLException e) {
@@ -156,5 +156,25 @@ public class ReviewBoundary {
                 AdminController.getInstance().finishedReview(frame);
             }
         }
+    }
+
+    private void initSuccessFrame() {
+
+        confirmFrame = new JFrame();
+        JPanel confirmPanel = new JPanel();
+        confirmPanel.add(new JLabel("Eliminazione della segnalazione. Continuare ?"));
+        JButton yes = new JButton("Si");
+        JButton no = new JButton("No");
+
+        confirmPanel.add(yes);
+        confirmPanel.add(no);
+        confirmFrame.add(confirmPanel);
+        confirmFrame.pack();
+        confirmFrame.setVisible(true);
+
+        Actions azione = new Actions(1);
+        yes.addActionListener(azione);
+
+        no.addActionListener(e -> confirmFrame.setVisible(false));
     }
 }
